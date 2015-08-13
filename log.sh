@@ -7,6 +7,8 @@ pipe_temp_file=temp.txt
 log_file=changelog.md
 log_file_tag=changelog.txt
 
+repos_url=https://github.com/coderpage/changeLog
+
 
 rm -f ${log_file}
 rm -f ${log_file_temp}
@@ -27,7 +29,11 @@ function readLog
 
     cat ${log_file_tag} | while read LINE
     do
-        [ -z $LINE ] && continue
+        if [ "x${LINE}" == "x" ]
+            then
+            continue
+        fi
+
         echo "- $LINE" >> ${log_file_temp}
     done
 
@@ -48,7 +54,7 @@ while read TAG ; do
         echo '    ' >> ${log_file_temp}
         echo '#### commit 记录' >> ${log_file_temp}
         echo '    ' >> ${log_file_temp}
-        GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](https://github.com/RNTD/AndroidOpenSDK/commit/%H)' $TAG..$NEXT >> ${log_file_temp}
+        GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](${repos_url}/commit/%H)' $TAG..$NEXT >> ${log_file_temp}
         echo '    ' >> ${log_file_temp}
 
     else
@@ -57,7 +63,7 @@ while read TAG ; do
         readLog
         echo '#### commit 记录' >> ${log_file_temp}
         echo '    ' >> ${log_file_temp}
-        GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](https://github.com/RNTD/AndroidOpenSDK/commit/%H)' $TAG.. >> ${log_file_temp}
+        GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](${repos_url}/commit/%H)' $TAG.. >> ${log_file_temp}
         echo '    ' >> ${log_file_temp}
 
     fi
@@ -75,7 +81,7 @@ done<${pipe_temp_file}
     echo '    ' >> ${log_file_temp}
     echo '#### commit 记录' >> ${log_file_temp}
     echo '    ' >> ${log_file_temp}
-    GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](https://github.com/RNTD/AndroidOpenSDK/commit/%H)' $current_tag >> ${log_file_temp}
+    GIT_PAGER=cat git log --no-merges --date=short  --pretty=format:'- %ad (%an) %s -> [view commit](${repos_url}/%H)' $current_tag >> ${log_file_temp}
     echo '    ' >> ${log_file_temp}
 
 
