@@ -23,7 +23,7 @@ function readLog
 
     if [ ! -f ${log_file_tag} ];then
 
-    echo '** 此版本没有设置 changelog.txt **' >> ${log_file_temp}
+    echo '*此版本没有设置 changelog.txt*' >> ${log_file_temp}
 
     else
 
