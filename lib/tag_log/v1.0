@@ -1,0 +1,3 @@
+changelog 第一个版本
+通过 git commit 信息生成 MarkDown 格式log文件
+使用 shell 脚本实现 log 生成
